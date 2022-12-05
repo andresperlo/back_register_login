@@ -4,22 +4,22 @@ const ProductSchema = new mongoose.Schema({
     price: {
         type: Number,
         trim: true,
-        require: true
+        required : true
     },
     name:{
         type: String,
         trim: true,
-        require: true
+        required : true
     },
     img: {
         type: String,
         trim: true,
-        require: true
+        required : true
     },
     description: {
         type: String,
         trim: true,
-        require: true
+        required : true
     }
 })
 

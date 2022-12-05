@@ -47,12 +47,12 @@ exports.loginUser = async (req, res) => {
 
         const token = jwt.sign(datosUsuarioParaToken, 'comision9i')
 
-        userExist.token = token 
+        userExist.token = token
 
 
         console.log('userExistDespues', userExist)
 
-       await userModel.updateOne({ username }, userExist)
+        await userModel.updateOne({ username }, userExist)
 
         res.status(200).json(userExist)
 
@@ -61,10 +61,11 @@ exports.loginUser = async (req, res) => {
     }
 }
 
-exports.logoutUser = (req, res) => {
+exports.logoutUser = async (req, res) => {
     try {
-        
+        await userModel.updateOne({ _id: res.locals.user.id }, { $set: { token: '' } })
+        res.json({ mensaje: 'Deslogueo ok' })
     } catch (error) {
-        
+        console.log(error)
     }
 }

@@ -21,7 +21,6 @@ exports.getAllProduct = async (req, res) => {
 
 exports.getOneProduct = async (req, res) => {
     try {
-
         const getOneProd = await ProductModel.findOne({ _id: req.params.id })
         res.status(200).json(getOneProd)
 
