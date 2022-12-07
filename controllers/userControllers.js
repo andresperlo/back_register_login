@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken')
 
 exports.userRegister = async (req, res) => {
     try {
-
         const salt = await bcryptjs.genSalt(10);
         const passwordEncrypt = await bcryptjs.hash(req.body.password, salt);
 
@@ -14,7 +13,6 @@ exports.userRegister = async (req, res) => {
         }
 
         const newUser = new userModel(newUserObj)
-
         newUser.save()
         res.status(201).json({ msg: 'Usuario Creado Correctamente' })
     } catch (error) {
@@ -26,7 +24,7 @@ exports.loginUser = async (req, res) => {
     try {
         const { username, password } = req.body
         const userExist = await userModel.findOne({ username })
-        console.log('userExistAntes', userExist)
+
         if (!userExist) {
             res.status(404).json({ message: 'usuario y/o contraseña incorrecto' })
         }
@@ -46,16 +44,9 @@ exports.loginUser = async (req, res) => {
         }
 
         const token = jwt.sign(datosUsuarioParaToken, 'comision9i')
-
         userExist.token = token
-
-
-        console.log('userExistDespues', userExist)
-
         await userModel.updateOne({ username }, userExist)
-
         res.status(200).json(userExist)
-
     } catch (error) {
         console.log(error)
     }

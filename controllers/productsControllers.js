@@ -23,7 +23,6 @@ exports.getOneProduct = async (req, res) => {
     try {
         const getOneProd = await ProductModel.findOne({ _id: req.params.id })
         res.status(200).json(getOneProd)
-
     } catch (error) {
         console.log('error', error)
     }

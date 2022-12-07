@@ -16,7 +16,6 @@ module.exports = (role) => async (req, res, next) => {
         res.locals.user = userLogin,
         res.locals.token = token
         next()
-
     } catch (error) {
        res.status(500).json({msg: 'Fallo Server', error})
     }

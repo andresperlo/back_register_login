@@ -9,5 +9,4 @@ router.get('/:id', auth(['admin', 'user']),productControllers.getOneProduct)
 router.put('/:id', auth('admin'),productControllers.modifyOneProduct)
 router.delete('/:id', auth('admin'),productControllers.deleteOneProduct)
 
-
 module.exports = router
