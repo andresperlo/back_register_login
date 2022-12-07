@@ -1,8 +1,20 @@
 const userModel = require('../models/userSchema')
 const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const { validationResult } = require('express-validator')
 
 exports.userRegister = async (req, res) => {
+    const { username, password } = req.body
+
+    if (username === '' && password === '') {
+        return res.status(422).json({ msg: 'Formulario Totalmente Vacio. Se debe completar TODO el formulario' })
+    }
+
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() })
+    }
+
     try {
         const salt = await bcryptjs.genSalt(10);
         const passwordEncrypt = await bcryptjs.hash(req.body.password, salt);
@@ -21,6 +33,17 @@ exports.userRegister = async (req, res) => {
 }
 
 exports.loginUser = async (req, res) => {
+    const { username, password } = req.body
+
+    if (username === '' && password === '') {
+        return res.status(422).json({ msg: 'Formulario Totalmente Vacio. Se debe completar TODO el formulario' })
+    }
+
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() })
+    }
+
     try {
         const { username, password } = req.body
         const userExist = await userModel.findOne({ username })
