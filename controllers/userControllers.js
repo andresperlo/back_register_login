@@ -2,6 +2,7 @@ const userModel = require('../models/userSchema')
 const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { validationResult } = require('express-validator')
+const sendMailer = require('../utils/nodemailer')
 
 exports.userRegister = async (req, res) => {
     const { username, password } = req.body
@@ -26,9 +27,10 @@ exports.userRegister = async (req, res) => {
 
         const newUser = new userModel(newUserObj)
         newUser.save()
+        await sendMailer(req.body.username)
         res.status(201).json({ msg: 'Usuario Creado Correctamente' })
     } catch (error) {
-        console.log(error)
+        console.log('error user', error)
     }
 }
 
