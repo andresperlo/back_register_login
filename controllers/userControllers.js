@@ -68,7 +68,7 @@ exports.loginUser = async (req, res) => {
             }
         }
 
-        const token = jwt.sign(datosUsuarioParaToken, 'comision9i')
+        const token = jwt.sign(datosUsuarioParaToken, process.env.JWT_SECRET)
         userExist.token = token
         await userModel.updateOne({ username }, userExist)
         res.status(200).json(userExist)

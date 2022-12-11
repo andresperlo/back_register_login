@@ -7,14 +7,14 @@ const sendMailer = async(name) => {
         port: 587,
         secure: false, // upgrade later with STARTTLS
         auth: {
-          user: "andresperlo5@gmail.com",
-          pass: "kxzrrebosxbiktve",
+          user: process.env.EMAIL,
+          pass: process.env.PASSWORD_GMAIL_APP,
         },
       };
 
       const message = {
-        from: 'andresperlo5@gmail.com',
-        to: name,
+        from: process.env.EMAIL,
+        to: process.env.EMAIL,
         subject: 'Registro exitoso',
         html: `   
                 <h1>Hola ${name} Bienvenido a mi pagina oficial</h1>
@@ -22,8 +22,6 @@ const sendMailer = async(name) => {
                 <img src="https://i.pinimg.com/originals/32/23/bb/3223bb4fe635c7ad798b035b6f486e12.gif" alt="coca-cola-gif">       
         `
       }
-
-
     try {
 
      const transport = nodemailer.createTransport(config)
